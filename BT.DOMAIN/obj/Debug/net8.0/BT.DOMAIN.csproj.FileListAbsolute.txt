@@ -1,0 +1,13 @@
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/bin/Debug/net8.0/BT.DOMAIN.deps.json
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/bin/Debug/net8.0/BT.DOMAIN.dll
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/bin/Debug/net8.0/BT.DOMAIN.pdb
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.GeneratedMSBuildEditorConfig.editorconfig
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.AssemblyInfoInputs.cache
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.AssemblyInfo.cs
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.csproj.CoreCompileInputs.cache
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.sourcelink.json
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.dll
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/refint/BT.DOMAIN.dll
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.pdb
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/ref/BT.DOMAIN.dll
+/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.DOMAIN/obj/Debug/net8.0/BT.DOMAIN.csproj.AssemblyReference.cache
