@@ -1,0 +1,6 @@
+@BT.API_HostAddress = http://localhost:5210
+
+GET {{BT.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
