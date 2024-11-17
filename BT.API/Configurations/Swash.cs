@@ -9,29 +9,29 @@ namespace BT.API.Configurations
             var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
             var clinetEnv = builder.Configuration.GetSection("Client_Environment")?.Value;
 
-            if (clinetEnv == "Local" || aspEnv == "Development" || aspEnv == "Production" || aspEnv == "Test")
+            // if (clinetEnv == "Local" || aspEnv == "Development" || aspEnv == "Production" || aspEnv == "Test")
+            // {
+            builder.Services.AddSwaggerGen(options =>
             {
-                builder.Services.AddSwaggerGen(options =>
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo
-                    {
-                        Version = "v1",
-                        Title = $"BUDGET-TRACKER.API {aspEnv}",
-                        Description = $"RESTFul Api for BUDGET-TRACKER Version: {builder.Configuration["buildVersion"]}"
-                    });
+                    Version = "v1",
+                    Title = $"BUDGET-TRACKER.API {aspEnv}",
+                    Description = $"RESTFul Api for BUDGET-TRACKER Version: {builder.Configuration["buildVersion"]}"
+                });
 
-                    // Add the JWT security definition
-                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                    {
-                        Type = SecuritySchemeType.ApiKey,
-                        Name = "Authorization",
-                        In = ParameterLocation.Header,
-                        Description = "Enter 'Bearer ' followed by your token"
-                    });
+                // Add the JWT security definition
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Description = "Enter 'Bearer ' followed by your token"
+                });
 
-                    // Add a security requirement to use the defined security scheme
-                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                    {
+                // Add a security requirement to use the defined security scheme
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                         {
                             new OpenApiSecurityScheme
                             {
@@ -43,29 +43,29 @@ namespace BT.API.Configurations
                             },
                             new string[] {}
                         }
-                    });
-
-                    options.CustomSchemaIds(i => i.FullName);
                 });
-            }
+
+                options.CustomSchemaIds(i => i.FullName);
+            });
+            // }
         }
 
         internal static void ConfigureSwash(WebApplication app, WebApplicationBuilder builder)
         {
             var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
 
-            if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
+            // if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
+            // {
+            app.UseSwagger(options =>
             {
-                app.UseSwagger(options =>
-                {
-                    options.SerializeAsV2 = true;
-                });
+                options.SerializeAsV2 = true;
+            });
 
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                });
-            }
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            });
+            //}
         }
     }
 }
