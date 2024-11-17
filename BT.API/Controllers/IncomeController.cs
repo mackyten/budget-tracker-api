@@ -16,9 +16,19 @@ namespace BT.API.Controllers
 {
     [ApiController]
     [Route("api/income")]
-    [Authorize] 
     public class IncomeController : BaseController
     {
+        [HttpPost("test")]
+        [Description("Creates new Income Data")]
+        [ProducesResponseType(typeof(IncomeModel), (int)HttpStatusCode.Created)]
+        public IActionResult Test()
+        {
+
+
+            return Ok("Connected");
+        }
+
+
         [HttpPost("create")]
         [Description("Creates new Income Data")]
         [ProducesResponseType(typeof(IncomeModel), (int)HttpStatusCode.Created)]

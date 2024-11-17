@@ -41,8 +41,8 @@ namespace BT.API.Configurations
         internal static void ConfigureEndpoints(WebApplication app)
         {
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseAuthentication();
+            // app.UseAuthorization();
+            // app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

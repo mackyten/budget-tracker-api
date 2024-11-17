@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BT.APPLICATION.BudgetTracker.Income.Models;
+using BT.DOMAIN.Entities.BudgetTracker;
 using BT.PERSISTENCE.Context;
 using MediatR;
 using IncomeData = BT.DOMAIN.Entities.BudgetTracker.Income;
@@ -12,7 +13,10 @@ namespace BT.APPLICATION.BudgetTracker.Income.Command.Create
 {
     public class Command : IRequest<Response>
     {
-        public required IncomeModel Income { get; set; }
+        public DateTime Date { get; set; }
+        public List<BankAccountModel> Banks { get; set; } = [];
+        public List<CashOnHandModel> Cash { get; set; } = [];
+        public List<DeductionModel> Deductions { get; set; } = [];
     }
 
     public class CommandHandler : IRequestHandler<Command, Response>
@@ -30,11 +34,18 @@ namespace BT.APPLICATION.BudgetTracker.Income.Command.Create
         {
             try
             {
-                var newIncome = _mapper.Map<IncomeData>(request.Income);
-                _context.Add(newIncome);
+                var newData = new IncomeData
+                {
+                    Date = request.Date,
+                    Banks = _mapper.Map<List<BankAccount>>(request.Banks),
+                    Cash = _mapper.Map<List<CashOnHand>>(request.Cash),
+                    Deductions = _mapper.Map<List<Deduction>>(request.Deductions)
+                };
+
+                _context.Add(newData);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                var response = _mapper.Map<IncomeModel>(newIncome);
+                var response = _mapper.Map<IncomeModel>(newData);
 
                 return new SuccessResponse<IncomeModel>(response);
             }

@@ -10,8 +10,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BT.APPLICATION.BudgetTracker.Income.Queries.GetList
-{
-    public class Query : IRequest<Response>
+{       public class Query : IRequest<Response>
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
@@ -37,6 +36,9 @@ namespace BT.APPLICATION.BudgetTracker.Income.Queries.GetList
 
                 // Apply pagination with Skip and Take
                 var items = await _context.Incomes
+                    .Include(x => x.Banks)
+                    .Include(x => x.Cash)
+                    .Include(x => x.Deductions)
                     .Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
                     .ToListAsync(cancellationToken);
