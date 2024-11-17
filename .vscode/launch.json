@@ -10,12 +10,12 @@
         "Launch BT.API (LOCAL)"
       ]
     },
-    // {
-    //   "name": "Launch Dev Projects",
-    //   "configurations": [
-    //     "Launch BT.API (DEV)"
-    //   ]
-    // },
+    {
+      "name": "Launch Dev Projects",
+      "configurations": [
+        "Launch BT.API (DEVELOPMENT)"
+      ]
+    },
   ],
   "configurations": [
     {
@@ -49,36 +49,36 @@
         "/Views": "${workspaceFolder}/Views"
       }
     },
-    // {
-    //   "name": "Launch BT.API (DEV)",
-    //   "type": "coreclr",
-    //   "request": "launch",
-    //   "preLaunchTask": "build",
-    //   "program": "${workspaceFolder}/BT.API/bin/Debug/net8.0/BT.API.dll",
-    //   "args": [],
-    //   "cwd": "${workspaceFolder}/BT.API",
-    //   "stopAtEntry": false,
-    //   "internalConsoleOptions": "openOnSessionStart",
-    //   "launchBrowser": {
-    //     "enabled": true,
-    //     "args": "${auto-detect-url}/swagger",
-    //     "windows": {
-    //       "command": "cmd.exe",
-    //       "args": "/C start ${auto-detect-url}/swagger"
-    //     },
-    //     "osx": {
-    //       "command": "open"
-    //     },
-    //     "linux": {
-    //       "command": "xdg-open"
-    //     }
-    //   },
-    //   "env": {
-    //     "ASPNETCORE_ENVIRONMENT": "Development"
-    //   },
-    //   "sourceFileMap": {
-    //     "/Views": "${workspaceFolder}/Views"
-    //   }
-    // },
+    {
+      "name": "Launch BT.API (DEVELOPMENT)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/BT.API/bin/Debug/net8.0/BT.API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/BT.API",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "launchBrowser": {
+        "enabled": true,
+        "args": "${auto-detect-url}/swagger",
+        "windows": {
+          "command": "cmd.exe",
+          "args": "/C start ${auto-detect-url}/swagger"
+        },
+        "osx": {
+          "command": "open"
+        },
+        "linux": {
+          "command": "xdg-open"
+        }
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
   ]
 }
