@@ -11,11 +11,11 @@ namespace BT.API.Configurations
     {
         internal static void RegisterEntityFramework(WebApplicationBuilder builder)
         {
-            var a = builder.Configuration.GetConnectionString("Default");
+            var a = builder.Configuration.GetConnectionString("DefaultSQL");
             builder.Services.AddDbContext<BTDbContext>(opts =>
             {
-                //opts.UseSqlServer(builder.Configuration.GetConnectionString("Default"), sqlServerOptions => sqlServerOptions.CommandTimeout(60));
-                opts.UseNpgsql(builder.Configuration.GetConnectionString("Default")!, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQL"), sqlServerOptions => sqlServerOptions.CommandTimeout(60));
+                //opts.UseNpgsql(builder.Configuration.GetConnectionString("Default")!, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
             });
         }
 
