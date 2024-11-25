@@ -16,11 +16,11 @@ namespace BT.API.Configurations
             builder.Services.AddDbContext<BTDbContext>(opts =>
             {
 
-                var connStr = "Server=tcp:bt-server.database.windows.net,1433;Initial Catalog=BTDb;Persist Security Info=False;User ID=BtAdmin;Password=BtTracker!234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
+                // var connStr = "Server=tcp:bt-server.database.windows.net,1433;Initial Catalog=BTDb;Persist Security Info=False;User ID=BtAdmin;Password=BtTracker!234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
 
-                opts.UseSqlServer(connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
+                // opts.UseSqlServer(connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
 
-                // opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQL"), sqlServerOptions => sqlServerOptions.CommandTimeout(60));
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQL"), sqlServerOptions => sqlServerOptions.CommandTimeout(60));
                 //opts.UseNpgsql(builder.Configuration.GetConnectionString("Default")!, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
             });
         }
