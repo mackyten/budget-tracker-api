@@ -183,4 +183,3 @@
 /Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.API/bin/Debug/net8.0/System.Reactive.dll
 /Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.API/bin/Debug/net8.0/Websocket.Client.dll
 /Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.API/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
-/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.API/bin/Debug/net8.0/appsettings.Release.json
