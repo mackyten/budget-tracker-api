@@ -30,12 +30,21 @@ namespace BT.API.Configurations
         }
 
 
-        internal static void ConfigureDatabaseMigrations(BTDbContext context)
+        internal static void ConfigureDatabaseMigrations(BTDbContext context, WebApplicationBuilder builder)
         {
-            //Check if there are any pending migrations
-            if (context.Database.GetPendingMigrations().Any())
+            var connStr = builder.Configuration.GetConnectionString("DefaultSQL");
+
+            try
             {
-                context.Database.Migrate();
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"{e.GetBaseException().Message} : ${connStr}");
             }
 
         }

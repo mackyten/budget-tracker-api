@@ -35,7 +35,7 @@ var context = scope.ServiceProvider.GetRequiredService<BTDbContext>();
 ConfigureCors(app);
 ConfigureEndpoints(app);
 ConfigureSwash(app, builder);
-ConfigureDatabaseMigrations(context);
+ConfigureDatabaseMigrations(context, builder);
 //ConfigureMulticast(app, builder);
 //await ConfigureInitialData(context, initialData);
 
