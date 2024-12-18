@@ -1,0 +1,1 @@
+dotnet ef migrations add 00.00.00.02 --startup-project BT.API --project BT.PERSISTENCE  --context BTDbContext
