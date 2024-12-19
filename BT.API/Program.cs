@@ -31,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 ConfigureCors(app);
-// await SeedAsync(app, builder);
+await SeedAsync(app, builder);
 
 
 app.Run();
