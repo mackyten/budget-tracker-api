@@ -10,11 +10,12 @@ namespace BT.API.Configurations
             // Register Entity Framework Core with PostgreSQL database connection
             builder.Services.AddDbContext<BTDbContext>(options =>
             {
+                var connectionString = Environment.GetEnvironmentVariable("DEFAULT_SQL");
                 // Configures PostgreSQL connection
                 // options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 
                 //Configures SQL connection
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQL"), sqlServerOptions => sqlServerOptions.CommandTimeout(60));
+                options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
             });
         }
 

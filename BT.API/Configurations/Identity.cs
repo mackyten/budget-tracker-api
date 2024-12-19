@@ -22,7 +22,8 @@ namespace BT.API.Configurations
 
         internal static void AddAuthentication(WebApplicationBuilder builder)
         {
-            var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new Exception("Jwt:Key is missing in appsettings.json"));
+            var jwt_key =Environment.GetEnvironmentVariable("JWT_KEY");
+            var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt:Key is missing in appsettings.json"));
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
