@@ -1,20 +1,20 @@
-﻿
-
-using BT.SERVICES.DateTimeService;
-using BT.SERVICES.SupabaseService;
-using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BT.SERVICES.EmailSender;
+using BT.SERVICES.KeyGenerator;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace BT.API.Configurations
 {
-    public static class Services
+    public class Services
     {
         internal static void RegisterServices(WebApplicationBuilder builder)
         {
-            //Date Time Service
-            builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
-            builder.Services.AddSingleton<SupabaseService>();
-            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<ApiKeyGenerator>();
+            builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
         }
     }
 }

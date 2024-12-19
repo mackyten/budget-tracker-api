@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FmnkfAs0ZNI=",
+  "dgSpecHash": "+C8FS/3KXaU=",
   "success": true,
   "projectFilePath": "/Users/angelo/dev_projects/BUDGET-TRACKER-API/BT.API/BT.API.csproj",
   "expectedPackageFiles": [
@@ -91,6 +91,7 @@
     "/Users/angelo/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "/Users/angelo/.nuget/packages/npgsql/8.0.5/npgsql.8.0.5.nupkg.sha512",
     "/Users/angelo/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.10/npgsql.entityframeworkcore.postgresql.8.0.10.nupkg.sha512",
+    "/Users/angelo/.nuget/packages/scrutor/3.3.0/scrutor.3.3.0.nupkg.sha512",
     "/Users/angelo/.nuget/packages/supabase/1.1.1/supabase.1.1.1.nupkg.sha512",
     "/Users/angelo/.nuget/packages/supabase.core/1.0.0/supabase.core.1.0.0.nupkg.sha512",
     "/Users/angelo/.nuget/packages/supabase.functions/2.0.0/supabase.functions.2.0.0.nupkg.sha512",
@@ -99,6 +100,8 @@
     "/Users/angelo/.nuget/packages/supabase.realtime/7.0.2/supabase.realtime.7.0.2.nupkg.sha512",
     "/Users/angelo/.nuget/packages/supabase.storage/2.0.2/supabase.storage.2.0.2.nupkg.sha512",
     "/Users/angelo/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "/Users/angelo/.nuget/packages/swashbuckle.aspnetcore.filters/8.0.2/swashbuckle.aspnetcore.filters.8.0.2.nupkg.sha512",
+    "/Users/angelo/.nuget/packages/swashbuckle.aspnetcore.filters.abstractions/8.0.2/swashbuckle.aspnetcore.filters.abstractions.8.0.2.nupkg.sha512",
     "/Users/angelo/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "/Users/angelo/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
     "/Users/angelo/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.4.0/swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512",

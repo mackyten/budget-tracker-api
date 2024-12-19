@@ -16,6 +16,7 @@ namespace BT.API.Controllers
 {
     [ApiController]
     [Route("api/income")]
+    [Authorize]
     public class IncomeController : BaseController
     {
         [HttpPost("test")]
@@ -23,8 +24,6 @@ namespace BT.API.Controllers
         [ProducesResponseType(typeof(IncomeModel), (int)HttpStatusCode.Created)]
         public IActionResult Test()
         {
-
-
             return Ok("Connected");
         }
 
@@ -46,26 +45,10 @@ namespace BT.API.Controllers
             return Ok(data);
         }
 
-        [HttpPut("update")]
-        [Description("Updates Income Data, Returns Icome Mode")]
-        [ProducesResponseType(typeof(IncomeModel), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Update([FromBody] Commands.Update.Command command)
-        {
-            var result = await Mediator.Send(command);
-
-            if (result is BadRequestResponse)
-            {
-                return BadRequest(result.Message);
-            }
-
-            var data = ((SuccessResponse<IncomeModel>)result).Data;
-            return Ok(data);
-        }
-
-        // [HttpDelete("delete")]
-        // [Description("Returns temp test record id")]
-        // [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
-        // public async Task<IActionResult> Delete([FromBody] Commands.Delete.Command command)
+        // [HttpPut("update")]
+        // [Description("Updates Income Data, Returns Icome Mode")]
+        // [ProducesResponseType(typeof(IncomeModel), (int)HttpStatusCode.OK)]
+        // public async Task<IActionResult> Update([FromBody] Commands.Update.Command command)
         // {
         //     var result = await Mediator.Send(command);
 
@@ -74,22 +57,7 @@ namespace BT.API.Controllers
         //         return BadRequest(result.Message);
         //     }
 
-        //     var data = ((SuccessResponse<int>)result).Data;
-        //     return Ok(data);
-        // }
-
-        // [HttpGet("get-id")]
-        // [Description("Query returns a TempTestRecordModel")]
-        // [ProducesResponseType(typeof(TempTestRecordModel), (int)HttpStatusCode.Created)]
-        // public async Task<IActionResult> GetById([FromQuery] Queries.GetById.Query query)
-        // {
-        //     var result = await Mediator.Send(query);
-        //     if (result is BadRequestResponse)
-        //     {
-        //         return BadRequest(result.Message);
-        //     }
-
-        //     var data = ((SuccessResponse<TempTestRecordModel>)result).Data;
+        //     var data = ((SuccessResponse<IncomeModel>)result).Data;
         //     return Ok(data);
         // }
 
