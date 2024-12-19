@@ -12,8 +12,11 @@ namespace BT.API.Configurations
 
         internal static void RegisterSwagger(WebApplicationBuilder builder)
         {
+            var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Swash>>();
+
             try
             {
+                logger.LogInformation("Registering Swagger...");
                 var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
                 if (aspEnv == "Local" || aspEnv == "Development" || aspEnv == "Production")
                 {
@@ -33,9 +36,12 @@ namespace BT.API.Configurations
                         options.OperationFilter<SecurityRequirementsOperationFilter>();
                     });
                 }
+                logger.LogInformation("Swagger Registered.");
+
             }
             catch (Exception e)
             {
+                logger.LogInformation($"Error Occured at RegisterSwagger : {e.GetBaseException().Message}");
                 throw new Exception($"Error Occured at RegisterSwagger : {e.GetBaseException().Message}");
             }
         }
@@ -43,8 +49,11 @@ namespace BT.API.Configurations
 
         internal static void ConfigureSwash(WebApplication app, WebApplicationBuilder builder)
         {
+            var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Swash>>();
             try
             {
+                logger.LogInformation("Configuring Swash...");
+
                 var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
                 if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
                 {
@@ -61,9 +70,12 @@ namespace BT.API.Configurations
                         options.DocumentTitle = "Project API";
                     });
                 }
+                logger.LogInformation("Swash Configured.");
+
             }
             catch (Exception e)
             {
+                logger.LogInformation($"Error Occured at ConfigureSwash : {e.GetBaseException().Message}");
                 throw new Exception($"Error Occured at ConfigureSwash : {e.GetBaseException().Message}");
             }
         }
@@ -72,16 +84,21 @@ namespace BT.API.Configurations
 
         internal static void UseSwagger(WebApplication app)
         {
+            var logger = app.Services.GetRequiredService<ILogger<Swash>>();
             try
             {
+                logger.LogInformation("Using Swagger...");
                 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
                 {
                     app.UseSwagger();
                     app.UseSwaggerUI();
                 }
+                logger.LogInformation("Swagger used.");
+
             }
             catch (Exception e)
             {
+                logger.LogInformation($"Error Occured at ConfigureSwash : {e.GetBaseException().Message}");
                 throw new Exception($"Error Occured at ConfigureSwash : {e.GetBaseException().Message}");
             }
         }
