@@ -13,8 +13,15 @@ namespace BT.API.Configurations
     {
         internal static void RegisterServices(WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<ApiKeyGenerator>();
-            builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
+            try
+            {
+                builder.Services.AddScoped<ApiKeyGenerator>();
+                builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at RegisterServices : {e.GetBaseException().Message}");
+            }
         }
     }
 }

@@ -6,24 +6,38 @@ namespace BT.API.Configurations
     {
         internal static void AddCorsPolicy(WebApplicationBuilder builder)
         {
-            var corsOptions = new CorsOptions();
-            builder.Configuration.GetSection("Cors").Bind(corsOptions);
-            builder.Services.AddCors(options =>
+            try
             {
-                options.AddPolicy("default", policy => policy
-                    .WithOrigins(corsOptions.AllowedOrigins?.ToArray() ?? [])
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
-            });
+                var corsOptions = new CorsOptions();
+                builder.Configuration.GetSection("Cors").Bind(corsOptions);
+                builder.Services.AddCors(options =>
+                {
+                    options.AddPolicy("default", policy => policy
+                        .WithOrigins(corsOptions.AllowedOrigins?.ToArray() ?? [])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+                });
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at AddCorsPolicy : {e.GetBaseException().Message}");
+            }
         }
 
         internal static void ConfigureCors(WebApplication app)
         {
-            app.UseCors("default");
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            try
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+                app.UseCors("default");
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at ConfigureCors : {e.GetBaseException().Message}");
+            }
         }
 
 

@@ -10,10 +10,17 @@ namespace BT.API.Configurations
     {
         internal static async Task SeedAsync(WebApplication app, WebApplicationBuilder builder)
         {
-            using (var scope = app.Services.CreateScope())
+            try
             {
-                var services = scope.ServiceProvider;
-                await SuperAdminSeeder.SeedSuperAdmin(services, builder);
+                using (var scope = app.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    await SuperAdminSeeder.SeedSuperAdmin(services, builder);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at SeedAsync : {e.GetBaseException().Message}");
             }
         }
     }

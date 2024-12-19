@@ -12,45 +12,59 @@ namespace BT.API.Configurations
 
         internal static void RegisterSwagger(WebApplicationBuilder builder)
         {
-            var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
-            if (aspEnv == "Local" || aspEnv == "Development" || aspEnv == "Production")
+            try
             {
-                builder.Services.AddSwaggerGen(options =>
+                var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
+                if (aspEnv == "Local" || aspEnv == "Development" || aspEnv == "Production")
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo
+                    builder.Services.AddSwaggerGen(options =>
                     {
-                        Version = "v1",
-                        Title = $"ProjectAPI {aspEnv}",
+                        options.SwaggerDoc("v1", new OpenApiInfo
+                        {
+                            Version = "v1",
+                            Title = $"ProjectAPI {aspEnv}",
+                        });
+                        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                        {
+                            Name = "Authorization",
+                            In = ParameterLocation.Header,
+                            Type = SecuritySchemeType.ApiKey,
+                        });
+                        options.OperationFilter<SecurityRequirementsOperationFilter>();
                     });
-                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                    {
-                        Name = "Authorization",
-                        In = ParameterLocation.Header,
-                        Type = SecuritySchemeType.ApiKey,
-                    });
-                    options.OperationFilter<SecurityRequirementsOperationFilter>();
-                });
-           }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at RegisterSwagger : {e.GetBaseException().Message}");
+            }
         }
 
 
         internal static void ConfigureSwash(WebApplication app, WebApplicationBuilder builder)
         {
-            var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
-            if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
+            try
             {
-                app.UseDeveloperExceptionPage();
-
-                app.UseSwagger(options =>
+                var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
+                if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
                 {
-                    options.SerializeAsV2 = true;
-                });
+                    app.UseDeveloperExceptionPage();
 
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.DocumentTitle = "Project API";
-                });
+                    app.UseSwagger(options =>
+                    {
+                        options.SerializeAsV2 = true;
+                    });
+
+                    app.UseSwaggerUI(options =>
+                    {
+                        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                        options.DocumentTitle = "Project API";
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at ConfigureSwash : {e.GetBaseException().Message}");
             }
         }
 
@@ -58,10 +72,17 @@ namespace BT.API.Configurations
 
         internal static void UseSwagger(WebApplication app)
         {
-            if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
+            try
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
+                {
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at ConfigureSwash : {e.GetBaseException().Message}");
             }
         }
     }

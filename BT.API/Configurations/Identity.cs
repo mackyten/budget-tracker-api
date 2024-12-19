@@ -14,33 +14,47 @@ namespace BT.API.Configurations
     {
         internal static void RegisterIdentity(WebApplicationBuilder builder)
         {
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-             .AddEntityFrameworkStores<BTDbContext>()
-             .AddDefaultTokenProviders();
+            try
+            {
+                builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+              .AddEntityFrameworkStores<BTDbContext>()
+              .AddDefaultTokenProviders();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at RegisterIdentity : {e.GetBaseException().Message}");
+            }
         }
 
 
         internal static void AddAuthentication(WebApplicationBuilder builder)
         {
-            var jwt_key =Environment.GetEnvironmentVariable("JWT_KEY");
-            var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt:Key is missing in appsettings.json"));
-            builder.Services.AddAuthentication(options =>
+            try
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
+                var jwt_key = Environment.GetEnvironmentVariable("JWT_KEY");
+                var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt:Key is missing in appsettings.json"));
+                builder.Services.AddAuthentication(options =>
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at AddAuthentication : {e.GetBaseException().Message}");
+            }
         }
     }
 }
