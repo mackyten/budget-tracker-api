@@ -1,29 +1,21 @@
-﻿
-
-using BT.APPLICATION.RequestResponse;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using BT.APPLICATION;
+using BT.APPLICATION.RequestResponse;
+using MediatR;
+
 
 namespace BT.API.Configurations
 {
-    public static class Mediator
+    public class Mediator
     {
         internal static void RegisterMediatr(WebApplicationBuilder builder)
         {
             builder.Services.AddMediatR(typeof(RecordNotFoundException).Assembly);
         }
-
-        //https://docs.fluentvalidation.net/en/latest/built-in-validators.html
-        internal static void AddFluentValidation(WebApplicationBuilder builder)
-        {
-            builder.Services.AddFluentValidationAutoValidation();
-            //builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblyContaining<RecordNotFoundException>();
-        }
-
 
         internal static void RegisterAutoMapper(WebApplicationBuilder builder)
         {

@@ -1,24 +1,20 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace BT.API.Configurations
 {
-    public static class CORS
+    public class CORS
     {
         internal static void AddCorsPolicy(WebApplicationBuilder builder)
         {
             var corsOptions = new CorsOptions();
             builder.Configuration.GetSection("Cors").Bind(corsOptions);
-
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("default", policy => policy
-                    .WithOrigins(corsOptions.AllowedOrigins.ToArray())
+                    .WithOrigins(corsOptions.AllowedOrigins?.ToArray() ?? [])
                     .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    );
+                    .AllowAnyMethod());
             });
-
-            builder.Services.AddControllers();
         }
 
         internal static void ConfigureCors(WebApplication app)
@@ -33,7 +29,7 @@ namespace BT.API.Configurations
 
         public class CorsOptions
         {
-            public List<string> AllowedOrigins { get; set; }
+            public List<string>? AllowedOrigins { get; set; }
         }
     }
 }

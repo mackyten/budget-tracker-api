@@ -1,70 +1,67 @@
-﻿using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace BT.API.Configurations
 {
-    public static class Swash
+    public class Swash
     {
-        internal static void RegisterSwash(WebApplicationBuilder builder)
+
+        internal static void RegisterSwagger(WebApplicationBuilder builder)
         {
             var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
-            var clinetEnv = builder.Configuration.GetSection("Client_Environment")?.Value;
-
-            // if (clinetEnv == "Local" || aspEnv == "Development" || aspEnv == "Production" || aspEnv == "Test")
+            // if (aspEnv == "Local" || aspEnv == "Development" || aspEnv == "Production")
             // {
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
+                builder.Services.AddSwaggerGen(options =>
                 {
-                    Version = "v1",
-                    Title = $"BUDGET-TRACKER.API {aspEnv}",
-                    Description = $"RESTFul Api for BUDGET-TRACKER Version: {builder.Configuration["buildVersion"]}"
+                    options.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = $"ProjectAPI {aspEnv}",
+                    });
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                    });
+                    options.OperationFilter<SecurityRequirementsOperationFilter>();
                 });
-
-                // Add the JWT security definition
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Description = "Enter 'Bearer ' followed by your token"
-                });
-
-                // Add a security requirement to use the defined security scheme
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"  // Ensure this matches the security definition
-                                }
-                            },
-                            new string[] {}
-                        }
-                });
-
-                options.CustomSchemaIds(i => i.FullName);
-            });
-            // }
+           // }
         }
+
 
         internal static void ConfigureSwash(WebApplication app, WebApplicationBuilder builder)
         {
             var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
-
             // if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
             // {
-            app.UseSwagger(options =>
-            {
-                options.SerializeAsV2 = true;
-            });
+                app.UseDeveloperExceptionPage();
 
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            });
+                app.UseSwagger(options =>
+                {
+                    options.SerializeAsV2 = true;
+                });
+
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.DocumentTitle = "Project API";
+                });
+            //}
+        }
+
+
+
+        internal static void UseSwagger(WebApplication app)
+        {
+            // if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
+            // {
+                app.UseSwagger();
+                app.UseSwaggerUI();
             //}
         }
     }

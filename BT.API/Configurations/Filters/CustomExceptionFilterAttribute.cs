@@ -1,15 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using BT.APPLICATION.RequestResponse;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BT.API.Configurations.Filters
 {
-    /// <summary>
-    /// A filter attribute applied in all controller methods
-    /// This is where we handle CustomExceptions. Return the correct status code based on Exception Type
-    /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
@@ -21,10 +15,10 @@ namespace BT.API.Configurations.Filters
         public override void OnException(ExceptionContext context)
         {
             var code = HttpStatusCode.InternalServerError;
-            if (context.Exception is RecordNotFoundException)
-            {
-                code = HttpStatusCode.NotFound;
-            }
+            // if (context.Exception is RecordNotFoundException)
+            // {
+            //     code = HttpStatusCode.NotFound;
+            // }
 
             context.HttpContext.Response.ContentType = "application/json";
             context.HttpContext.Response.StatusCode = (int)code;
