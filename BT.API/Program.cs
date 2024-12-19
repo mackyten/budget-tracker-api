@@ -6,13 +6,11 @@ using static BT.API.Configurations.Identity;
 using static BT.API.Configurations.CORS;
 using static BT.API.Configurations.Services;
 using static BT.API.Configurations.SeedData;
-using static BT.API.Configurations.EnvirontmentVariables;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-GetEnvVariables(builder);
 AddControllers(builder);
 RegisterSwagger(builder);
 RegisterDatabase(builder);
@@ -33,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 ConfigureCors(app);
-await SeedAsync(app, builder);
+// await SeedAsync(app, builder);
 
 
 app.Run();
