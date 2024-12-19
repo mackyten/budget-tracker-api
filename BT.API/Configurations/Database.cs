@@ -11,7 +11,14 @@ namespace BT.API.Configurations
             builder.Services.AddDbContext<BTDbContext>(options =>
             {
                 Console.WriteLine($"Envirinment: ${builder.Environment.EnvironmentName}");
-                var connectionString = Environment.GetEnvironmentVariable("DEFAULT_SQL");
+                var connectionString = builder.Configuration.GetConnectionString("Default");
+
+                if(string.IsNullOrEmpty(connectionString))
+                {
+                    connectionString = Environment.GetEnvironmentVariable("DEFAULT_SQL");
+                }
+                
+
                 // Configures PostgreSQL connection
                 // options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 
