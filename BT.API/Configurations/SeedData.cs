@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BT.SERVICES.DataSeeder;
 
 namespace BT.API.Configurations
 {
@@ -12,7 +13,7 @@ namespace BT.API.Configurations
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                //await SuperAdminSeeder.SeedSuperAdmin(services, builder);
+                await SuperAdminSeeder.SeedSuperAdmin(services, builder);
             }
         }
     }
