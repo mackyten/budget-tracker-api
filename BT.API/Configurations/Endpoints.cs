@@ -10,8 +10,12 @@ namespace BT.API.Configurations
     {
         internal static void AddControllers(WebApplicationBuilder builder)
         {
+            var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Endpoint>>();
+            logger.LogInformation("Adding Controllers...");
+
             try
             {
+
                 builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -33,9 +37,12 @@ namespace BT.API.Configurations
                     });
 
                 builder.Services.AddEndpointsApiExplorer();
+                logger.LogInformation("Controllers added.");
+
             }
             catch (Exception e)
             {
+                logger.LogInformation($"Error Occured at AddControllers : {e.GetBaseException().Message}");
                 throw new Exception($"Error Occured at AddControllers : {e.GetBaseException().Message}");
             }
         }

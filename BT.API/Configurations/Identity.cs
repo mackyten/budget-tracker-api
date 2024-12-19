@@ -14,14 +14,20 @@ namespace BT.API.Configurations
     {
         internal static void RegisterIdentity(WebApplicationBuilder builder)
         {
+            var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Identity>>();
             try
             {
+                logger.LogInformation("Registering Identity...");
                 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<BTDbContext>()
               .AddDefaultTokenProviders();
+
+                logger.LogInformation("Identity Registered.");
+
             }
             catch (Exception e)
             {
+                logger.LogInformation($"Error Occured at RegisterIdentity : {e.GetBaseException().Message}");
                 throw new Exception($"Error Occured at RegisterIdentity : {e.GetBaseException().Message}");
             }
         }
@@ -31,6 +37,8 @@ namespace BT.API.Configurations
         {
             try
             {
+                var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Identity>>();
+                logger.LogInformation("Adding Authentication...");
                 var jwt_key = Environment.GetEnvironmentVariable("JWT_KEY");
                 var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt:Key is missing in appsettings.json"));
                 builder.Services.AddAuthentication(options =>
@@ -50,6 +58,9 @@ namespace BT.API.Configurations
                         ValidateAudience = false
                     };
                 });
+
+                logger.LogInformation("Authentication Added.");
+
             }
             catch (Exception e)
             {

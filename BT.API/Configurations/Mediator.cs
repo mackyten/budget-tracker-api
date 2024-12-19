@@ -14,13 +14,19 @@ namespace BT.API.Configurations
     {
         internal static void RegisterMediatr(WebApplicationBuilder builder)
         {
+            var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Mediator>>();
+            logger.LogInformation("Registering Mediatr...");
             builder.Services.AddMediatR(typeof(RecordNotFoundException).Assembly);
+            logger.LogInformation("Mediatr Registered.");
         }
 
         internal static void RegisterAutoMapper(WebApplicationBuilder builder)
         {
+            var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Mediator>>();
+
             try
             {
+                logger.LogInformation("Registering Automapper...");
                 builder.Services.AddAutoMapper(
                     configAction =>
                     {
@@ -28,9 +34,13 @@ namespace BT.API.Configurations
                     },
                     typeof(Response)
                 );
+
+                logger.LogInformation("Automapper Registered.");
+
             }
             catch (Exception e)
             {
+                logger.LogInformation($"Error Occured at RegisterAutoMapper : {e.GetBaseException().Message}");
                 throw new Exception($"Error Occured at RegisterAutoMapper : {e.GetBaseException().Message}");
             }
         }
