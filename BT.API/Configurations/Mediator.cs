@@ -19,13 +19,20 @@ namespace BT.API.Configurations
 
         internal static void RegisterAutoMapper(WebApplicationBuilder builder)
         {
-            builder.Services.AddAutoMapper(
-                configAction =>
-                {
-                    configAction.ValidateInlineMaps = false;
-                },
-                typeof(Response)
-            );
+            try
+            {
+                builder.Services.AddAutoMapper(
+                    configAction =>
+                    {
+                        configAction.ValidateInlineMaps = false;
+                    },
+                    typeof(Response)
+                );
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error Occured at RegisterAutoMapper : {e.GetBaseException().Message}");
+            }
         }
     }
 }
