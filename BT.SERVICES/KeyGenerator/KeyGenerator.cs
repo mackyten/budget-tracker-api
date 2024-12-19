@@ -23,8 +23,9 @@ namespace BT.SERVICES.KeyGenerator
         public async Task<string> GenerateJwtToken(IdentityUser user, int expiresIn)
         {
 
+            var jwt_key = Environment.GetEnvironmentVariable("JWT_KEY");
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"] ?? throw new Exception("Jwt key is missing"));
+            var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt key is missing"));
 
             var roles = await _userManager.GetRolesAsync(user);
 
