@@ -13,8 +13,8 @@ namespace BT.API.Configurations
         internal static void RegisterSwagger(WebApplicationBuilder builder)
         {
             var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
-            // if (aspEnv == "Local" || aspEnv == "Development" || aspEnv == "Production")
-            // {
+            if (aspEnv == "Local" || aspEnv == "Development" || aspEnv == "Production")
+            {
                 builder.Services.AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo
@@ -30,15 +30,15 @@ namespace BT.API.Configurations
                     });
                     options.OperationFilter<SecurityRequirementsOperationFilter>();
                 });
-           // }
+           }
         }
 
 
         internal static void ConfigureSwash(WebApplication app, WebApplicationBuilder builder)
         {
             var aspEnv = builder.Configuration.GetSection("ASPNETCORE_ENVIRONMENT")?.Value;
-            // if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
-            // {
+            if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || aspEnv == "Local" || aspEnv == "Test")
+            {
                 app.UseDeveloperExceptionPage();
 
                 app.UseSwagger(options =>
@@ -51,7 +51,7 @@ namespace BT.API.Configurations
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     options.DocumentTitle = "Project API";
                 });
-            //}
+            }
         }
 
 
