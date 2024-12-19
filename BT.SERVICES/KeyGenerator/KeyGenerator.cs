@@ -23,7 +23,7 @@ namespace BT.SERVICES.KeyGenerator
         public async Task<string> GenerateJwtToken(IdentityUser user, int expiresIn)
         {
 
-            var jwt_key = Environment.GetEnvironmentVariable("JWT_KEY");
+            var jwt_key = "d2d9cec142e04150b01dafa4b78ce75c";//Environment.GetEnvironmentVariable("JWT_KEY");
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt key is missing"));
 

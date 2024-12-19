@@ -39,7 +39,7 @@ namespace BT.API.Configurations
             {
                 var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Identity>>();
                 logger.LogInformation("Adding Authentication...");
-                var jwt_key = Environment.GetEnvironmentVariable("JWT_KEY");
+                var jwt_key = "d2d9cec142e04150b01dafa4b78ce75c";//Environment.GetEnvironmentVariable("JWT_KEY");
                 var key = Encoding.ASCII.GetBytes(jwt_key ?? throw new Exception("Jwt:Key is missing in appsettings.json"));
                 builder.Services.AddAuthentication(options =>
                 {
