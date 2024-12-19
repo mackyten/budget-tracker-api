@@ -58,11 +58,11 @@ namespace BT.API.Configurations
 
         internal static void UseSwagger(WebApplication app)
         {
-            // if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
-            // {
+            if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
+            {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            //}
+            }
         }
     }
 }
