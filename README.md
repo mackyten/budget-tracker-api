@@ -1,5 +1,7 @@
 # Budget Tracker API
 
+[![CI](https://github.com/mackyten/budget-tracker-api/actions/workflows/ci.yml/badge.svg)](https://github.com/mackyten/budget-tracker-api/actions/workflows/ci.yml)
+
 .NET 8 Web API behind the [Budget Tracker web app](https://github.com/mackyten/budget-tracker-web).
 
 ## Tech stack
