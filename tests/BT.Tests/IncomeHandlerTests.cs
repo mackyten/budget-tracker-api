@@ -124,6 +124,21 @@ public class GetIncomeListTests
 
 public class UpdateIncomeTests
 {
+    private static async Task<int> SeedIncomeAsync(TestDb db)
+    {
+        var created = await new Create.CommandHandler(db.NewContext(), TestDb.Mapper).Handle(
+            new Create.Command
+            {
+                Date = new DateTime(2025, 1, 15),
+                Banks = [new BankAccountModel { Name = "BDO", Balance = 5000 }],
+                Cash = [new CashOnHandModel { Denomination = Denominations.ONE_HUNDRED, Pieces = 3 }],
+                Deductions = [new DeductionModel { Description = "Rent", Amount = 1200 }],
+            },
+            CancellationToken.None);
+
+        return Assert.IsType<SuccessResponse<IncomeModel>>(created).Data.Id;
+    }
+
     [Fact]
     public async Task Update_ReturnsBadRequest_WhenTheIncomeDoesNotExist()
     {
@@ -132,6 +147,75 @@ public class UpdateIncomeTests
 
         var bad = Assert.IsType<BadRequestResponse>(response);
         Assert.Equal("Cannot find item.", bad.Message);
+    }
+
+    [Fact]
+    public async Task Update_PersistsTheNewDateAndReplacesTheChildRows()
+    {
+        var db = new TestDb();
+        var id = await SeedIncomeAsync(db);
+
+        var response = await new Update.CommandHandler(db.NewContext(), TestDb.Mapper).Handle(
+            new Update.Command
+            {
+                Income = new IncomeModel
+                {
+                    Id = id,
+                    Date = new DateTime(2025, 2, 1),
+                    Banks = [new BankAccountModel { Name = "BPI", Balance = 7500 }],
+                    Cash = [],
+                    Deductions =
+                    [
+                        new DeductionModel { Description = "Internet", Amount = 1500 },
+                        new DeductionModel { Description = "Power", Amount = 2000 },
+                    ],
+                },
+            },
+            CancellationToken.None);
+
+        Assert.IsType<SuccessResponse<IncomeModel>>(response);
+
+        await using var verify = db.NewContext();
+        var saved = await verify.Incomes
+            .Include(x => x.Banks).Include(x => x.Cash).Include(x => x.Deductions)
+            .SingleAsync();
+        Assert.Equal(new DateTime(2025, 2, 1), saved.Date);
+        Assert.Equal("BPI", Assert.Single(saved.Banks).Name);
+        Assert.Empty(saved.Cash);
+        Assert.Equal(2, saved.Deductions.Count);
+        Assert.Equal(1, await verify.BankAccounts.CountAsync());   // the old "BDO" row is gone, not orphaned
+        Assert.Equal(0, await verify.CashOnHands.CountAsync());
+    }
+
+    [Fact]
+    public async Task Update_StampsLastUpdatedBy_WithTheSignedInUser()
+    {
+        var db = new TestDb(userId: "user-7", email: "gelo@example.com");
+        var id = await SeedIncomeAsync(db);
+
+        await new Update.CommandHandler(db.NewContext(), TestDb.Mapper).Handle(
+            new Update.Command { Income = new IncomeModel { Id = id, Date = new DateTime(2025, 3, 1) } },
+            CancellationToken.None);
+
+        await using var verify = db.NewContext();
+        var saved = await verify.Incomes.SingleAsync();
+        Assert.Equal("user-7", saved.LastUpdatedById);
+        Assert.Equal("gelo@example.com", saved.LastUpdatedBy);
+        Assert.Equal(1, saved.Version);
+    }
+
+    [Fact]
+    public async Task Update_FallsBackToNotAvailable_WhenNobodyIsSignedIn()
+    {
+        var db = new TestDb();
+        var id = await SeedIncomeAsync(db);
+
+        await new Update.CommandHandler(db.NewContext(), TestDb.Mapper).Handle(
+            new Update.Command { Income = new IncomeModel { Id = id, Date = new DateTime(2025, 3, 1) } },
+            CancellationToken.None);
+
+        await using var verify = db.NewContext();
+        Assert.Equal("n/a", (await verify.Incomes.SingleAsync()).LastUpdatedById);
     }
 }
 

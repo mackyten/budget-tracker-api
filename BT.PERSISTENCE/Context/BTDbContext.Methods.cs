@@ -61,7 +61,7 @@ namespace BT.PERSISTENCE.Context
                     if (entity != null)
                     {
                         entity.LastUpdatedAt = DateTime.UtcNow;
-                        entity.LastUpdatedById = string.IsNullOrEmpty(userId) ? userId : "n/a";
+                        entity.LastUpdatedById = !string.IsNullOrEmpty(userId) ? userId : "n/a";
                         entity.LastUpdatedBy = !string.IsNullOrEmpty(userEmail) ? userEmail : "n/a";
                         entity.Version++;
                     }
@@ -72,7 +72,7 @@ namespace BT.PERSISTENCE.Context
                     if (entity != null)
                     {
                         entity.LastUpdatedAt = DateTime.UtcNow;
-                        entity.LastUpdatedById = string.IsNullOrEmpty(userId) ? userId : "n/a";
+                        entity.LastUpdatedById = !string.IsNullOrEmpty(userId) ? userId : "n/a";
                         entity.LastUpdatedBy = !string.IsNullOrEmpty(userEmail) ? userEmail : "n/a";
                         entity.Version++;
                     }
