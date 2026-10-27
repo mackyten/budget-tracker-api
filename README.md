@@ -35,3 +35,11 @@ dotnet run --project BT.API
 ```
 
 Configure the SQL Server connection string and JWT key through environment variables or user secrets. Do not commit them.
+
+## Tests
+
+```bash
+dotnet test BT.API.sln
+```
+
+xUnit tests run the MediatR handlers against EF Core's in-memory provider: creating an income with its bank, cash and deduction rows, the audit fields stamped from the signed-in user, pagination metadata, and the not-found path.

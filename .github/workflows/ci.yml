@@ -15,3 +15,4 @@ jobs:
           dotnet-version: 8.0.x
       - run: dotnet restore BT.API.sln
       - run: dotnet build BT.API.sln --no-restore -c Release
+      - run: dotnet test BT.API.sln --no-build -c Release
