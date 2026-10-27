@@ -362,3 +362,10 @@ MigrationBackup/
 FodyWeavers.xsd
 
 .env
+
+# Secrets and OS files
+.env
+.env.*
+.DS_Store
+**/bin/
+**/obj/
