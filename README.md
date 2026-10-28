@@ -43,3 +43,7 @@ dotnet test BT.API.sln
 ```
 
 xUnit tests run the MediatR handlers against EF Core's in-memory provider: creating an income with its bank, cash and deduction rows, the audit fields stamped from the signed-in user, pagination metadata, and the not-found path.
+
+## License
+
+[MIT](LICENSE)
